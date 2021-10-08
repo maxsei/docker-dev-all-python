@@ -26,4 +26,15 @@ RUN curl http://ppa.launchpad.net/deadsnakes/ppa/ubuntu/dists/bionic/main/binary
   # Install. \
   awk '{print $2}' | xargs apt install -y
 
+# Require cpu arch to be specified.
+ARG CPU_ARCH
+RUN ["/bin/bash", "-c", ": ${CPU_ARCH:?Build argument needs to be set}"]
+
+# Check available architechtures.
+RUN curl http://ppa.launchpad.net/deadsnakes/ppa/ubuntu/dists/bionic/main/ | \
+  grep -Po '(?<=href\=\"binary-).*(?=\/\")' > archs.txt
+RUN grep -wq "$CPU_ARCH" archs.txt || \
+  (echo "'$CPU_ARCH' not supported must be one of '$(cat archs.txt | xargs)'" && exit 2)
+RUN rm archs.txt
+
 RUN apt remove -y software-properties-common curl
