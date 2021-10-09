@@ -33,10 +33,10 @@ jobs:
       matrix:
         platform:
           - linux/amd64
-          - linux/arm64
-          - linux/386
-          - linux/ppc64le
-          - linux/s390x
+          # - linux/arm64
+          # - linux/386
+          # - linux/ppc64le
+          # - linux/s390x
     environment: release
     env:
       IMAGE_NAME: python-all
