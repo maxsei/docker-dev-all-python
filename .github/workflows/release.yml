@@ -8,6 +8,7 @@ on:
       - "v*"
 jobs:
   docker:
+    environment: release
     env:
       IMAGE_NAME: "python-all"
     runs-on: ubuntu-latest
