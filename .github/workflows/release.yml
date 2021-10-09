@@ -9,6 +9,7 @@ on:
 
 jobs:
   release:
+    runs-on: ubuntu-latest
     steps:
       - id: get_version
         uses: battila7/get-version-action@v2
