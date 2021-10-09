@@ -8,6 +8,14 @@ on:
       - "v*"
 jobs:
   setup:
+    strategy:
+      matrix:
+        platform:
+          - linux/amd64
+          # - linux/arm64
+          # - linux/386
+          # - linux/ppc64le
+          # - linux/s390x
     environment: release
     env:
       IMAGE_NAME: python-all
@@ -28,21 +36,6 @@ jobs:
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-  build:
-    strategy:
-      matrix:
-        platform:
-          - linux/amd64
-          # - linux/arm64
-          # - linux/386
-          # - linux/ppc64le
-          # - linux/s390x
-    environment: release
-    env:
-      IMAGE_NAME: python-all
-      DOCKERHUB_USERNAME: maxsei
-    runs-on: ubuntu-latest
-    steps:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -51,7 +44,7 @@ jobs:
           push: true
           tags: |
             ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}-${{ matrix.platform }}:latest
-            ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}-${{ matrix.platform }}:${{ jobs.steps.get_version.outputs.version-without-v }}
+            ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}-${{ matrix.platform }}:${{ steps.get_version.outputs.version-without-v }}
       - uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
