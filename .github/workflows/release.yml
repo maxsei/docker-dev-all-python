@@ -40,8 +40,8 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:${{ steps.get_version.outputs.version-without-v }}
-            ghcr/${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:latest
-            ghcr/${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:${{ steps.get_version.outputs.version-without-v }}
+            # ghcr/${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:latest
+            # ghcr/${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:${{ steps.get_version.outputs.version-without-v }}
       - uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
