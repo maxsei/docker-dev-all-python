@@ -6,8 +6,18 @@ on:
   push:
     tags:
       - "v*"
+
 jobs:
-  setup:
+  release:
+    steps:
+      - uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            Dockerfile
+            python-exts.txt
+  docker:
     strategy:
       matrix:
         platform:
@@ -45,10 +55,3 @@ jobs:
           tags: |
             ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}-${{ matrix.platform }}:latest
             ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}-${{ matrix.platform }}:${{ steps.get_version.outputs.version-without-v }}
-      - uses: marvinpinto/action-automatic-releases@latest
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          files: |
-            Dockerfile
-            python-exts.txt
