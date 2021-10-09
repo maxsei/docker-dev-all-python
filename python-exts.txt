@@ -1,0 +1,18 @@
+# vim: commentstring=#%s
+# Python extensions that are kept when installing python packages except for ones
+# that are commented out.
+# complete
+# dbg
+dev
+distutils
+# doc
+# examples
+# full
+# gdbm
+# idle
+# lib2to3
+# minimal
+# stdlib
+# testsuite
+# tk
+# venv
